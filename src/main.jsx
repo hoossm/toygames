@@ -24,121 +24,209 @@ const descriptions={
 8:{ar:"انطلق في عالم مفتوح مليء بالسيارات والسباقات والمناظر الطبيعية الخلابة.",en:"Race through a huge open world filled with cars, events, and stunning landscapes."}
 };
 
+const genre={
+"أكشن":"Action",
+"رياضة":"Sports",
+"مغامرات":"Adventure",
+"تقمص الأدوار":"RPG",
+"سيارات":"Racing",
+"استراتيجية":"Strategy",
+"رعب":"Horror"
+};
+
+const categoryMap={
+"كل الألعاب":null,
+"ألعاب الأكشن":"أكشن",
+"مغامرات":"مغامرات",
+"تقمص الأدوار":"تقمص الأدوار",
+"ألعاب الرياضة":"رياضة",
+"ألعاب السيارات":"سيارات",
+"ألعاب الاستراتيجية":"استراتيجية",
+"ألعاب الرعب":"رعب"
+};
+
 const cats=[
-["كل الألعاب",Grid2X2],["ألعاب الأكشن",Swords],["مغامرات",Compass],["تقمص الأدوار",ShieldCheck],
-["ألعاب الرياضة",Trophy],["ألعاب السيارات",Car],["ألعاب الاستراتيجية",CrosshairFallback],["ألعاب الرعب",Dice5]
+["كل الألعاب",Grid2X2],
+["ألعاب الأكشن",Swords],
+["مغامرات",Compass],
+["تقمص الأدوار",ShieldCheck],
+["ألعاب الرياضة",Trophy],
+["ألعاب السيارات",Car],
+["ألعاب الاستراتيجية",CrosshairFallback],
+["ألعاب الرعب",Dice5]
 ];
+
 function CrosshairFallback(){return <span className="crosshair">✦</span>}
 
 function Logo({lang}){return <a className="logo" href="#home" aria-label={lang==="ar"?"توي جيمز":"ToyGames"}>
-  <img src={lang==="ar"?"/arabiclogo.png":"/englogo.png"} alt={lang==="ar"?"توي جيمز":"ToyGames"}/>
- </a>}
-function Header({q,setQ,count,lang,setLang,onCart}){
- const[open,setOpen]=useState(false);
- return <><header><div className="head">
- <button className="icon mobile-menu" onClick={()=>setOpen(1)}><Menu/></button>
- <Logo lang={lang}/>
- <nav><a className="active" href="#home">{lang==="ar"?"الرئيسية":"Home"}</a><a href="#games">{lang==="ar"?"كل الألعاب":"All Games"}</a><a href="#offers">{lang==="ar"?"العروض":"Offers"}</a><a href="#best">{lang==="ar"?"الأكثر مبيعًا":"Best Sellers"}</a><a href="#categories">{lang==="ar"?"الأقسام":"Categories"}</a></nav>
- <div className="actions"><div className="search"><Search/><input value={q} onChange={e=>setQ(e.target.value)} placeholder={lang==="ar"?"إبحث عن لعبة ...":"Search for a game ..."}/></div>
- <button className="icon desktop"><Heart/></button><button className="icon desktop"><UserRound/></button>
- <button className="lang-toggle" onClick={()=>setLang(lang==="ar"?"en":"ar")}>{lang==="ar"?"EN":"عربي"}</button>
- <button className="cart" aria-label={lang==="ar"?"فتح السلة":"Open cart"} onClick={onCart}><ShoppingCart/><b>{count}</b></button></div></div></header>
- {open&&<div className="drawer" onClick={()=>setOpen(0)}><aside onClick={e=>e.stopPropagation()}><button className="close" onClick={()=>setOpen(0)}><X/></button><Logo lang={lang}/>
- <a href="#home" onClick={()=>setOpen(0)}>{lang==="ar"?"الرئيسية":"Home"}</a><a href="#games" onClick={()=>setOpen(0)}>{lang==="ar"?"كل الألعاب":"All Games"}</a><a href="#offers" onClick={()=>setOpen(0)}>{lang==="ar"?"العروض":"Offers"}</a><a href="#best" onClick={()=>setOpen(0)}>{lang==="ar"?"الأكثر مبيعًا":"Best Sellers"}</a><a href="#categories" onClick={()=>setOpen(0)}>{lang==="ar"?"الأقسام":"Categories"}</a>
- <button className="drawer-lang" onClick={()=>setLang(lang==="ar"?"en":"ar")}>{lang==="ar"?"English":"العربية"}</button></aside></div>}</>
+<img src={lang==="ar"?"/arabiclogo.png":"/englogo.png"} alt={lang==="ar"?"توي جيمز":"ToyGames"}/></a>}
+
+function Header({q,setQ,count,lang,setLang,onCart,onWishlist,onAccount}){
+const[open,setOpen]=useState(false);
+return <><header><div className="head">
+<button className="icon mobile-menu" onClick={()=>setOpen(1)} aria-label={lang==="ar"?"فتح القائمة":"Open menu"}><Menu/></button>
+<Logo lang={lang}/>
+<nav>
+<a className="active" href="#home">{lang==="ar"?"الرئيسية":"Home"}</a>
+<a href="#games">{lang==="ar"?"كل الألعاب":"All Games"}</a>
+<a href="#offers">{lang==="ar"?"العروض":"Offers"}</a>
+<a href="#best">{lang==="ar"?"الأكثر مبيعًا":"Best Sellers"}</a>
+<a href="#categories">{lang==="ar"?"الأقسام":"Categories"}</a>
+</nav>
+<div className="actions">
+<div className="search"><Search/><input value={q} onChange={e=>setQ(e.target.value)} placeholder={lang==="ar"?"إبحث عن لعبة ...":"Search for a game ..."}/></div>
+<button className="icon desktop" onClick={onWishlist} aria-label={lang==="ar"?"المفضلة":"Wishlist"}><Heart/></button>
+<button className="icon desktop" onClick={onAccount} aria-label={lang==="ar"?"حسابي":"Account"}><UserRound/></button>
+<button className="lang-toggle" onClick={()=>setLang(lang==="ar"?"en":"ar")}>{lang==="ar"?"EN":"عربي"}</button>
+<button className="cart" aria-label={lang==="ar"?"فتح السلة":"Open cart"} onClick={onCart}><ShoppingCart/><b>{count}</b></button>
+</div></div></header>
+{open&&<div className="drawer" onClick={()=>setOpen(0)}><aside onClick={e=>e.stopPropagation()}>
+<button className="close" onClick={()=>setOpen(0)}><X/></button><Logo lang={lang}/>
+<a href="#home" onClick={()=>setOpen(0)}>{lang==="ar"?"الرئيسية":"Home"}</a>
+<a href="#games" onClick={()=>setOpen(0)}>{lang==="ar"?"كل الألعاب":"All Games"}</a>
+<a href="#offers" onClick={()=>setOpen(0)}>{lang==="ar"?"العروض":"Offers"}</a>
+<a href="#best" onClick={()=>setOpen(0)}>{lang==="ar"?"الأكثر مبيعًا":"Best Sellers"}</a>
+<a href="#categories" onClick={()=>setOpen(0)}>{lang==="ar"?"الأقسام":"Categories"}</a>
+<button className="drawer-lang" onClick={()=>setLang(lang==="ar"?"en":"ar")}>{lang==="ar"?"English":"العربية"}</button>
+</aside></div>}</>
 }
 
-function Hero({lang}){return <section className={"hero "+lang}><div className="hero-content"><span className="eyebrow"><Flame/> {lang==="ar"?"عروض الأسبوع":"Weekly Offers"}</span><h1>{lang==="ar"?<>ألعاب أكثر<br/><strong>متعة .. بأسعار أفضل</strong></>:<>More games.<br/><strong>Better prices.</strong></>}</h1><p>{lang==="ar"?<>استمتع بأضخم مكتبة ألعاب رقمية<br/>مع أفضل العروض المخصصة لك.</>:<>Enjoy a huge digital game library<br/>with offers made for you.</>}</p><a className="primary" href="#offers">{lang==="ar"?"تصفح العروض":"Browse Offers"} <ChevronLeft/></a></div><div className="dots"><i className="on"/><i/><i/></div></section>}
+function Hero({lang}){return <section className={"hero "+lang}>
+<div className="hero-content"><span className="eyebrow"><Flame/> {lang==="ar"?"عروض الأسبوع":"Weekly Offers"}</span>
+<h1>{lang==="ar"?<>ألعاب أكثر<br/><strong>متعة ..<br/>بأسعار أفضل</strong></>:<>More games.<br/><strong>Better prices.</strong></>}</h1>
+<p>{lang==="ar"?<>استمتع بأضخم مكتبة ألعاب رقمية<br/>مع أفضل العروض المخصصة لك.</>:<>Enjoy a huge digital game library<br/>with offers made for you.</>}</p>
+<a className="primary" href="#offers">{lang==="ar"?"تصفح العروض":"Browse Offers"} <ChevronLeft/></a></div>
+<div className="dots" aria-hidden="true"><i className="on"/><i/><i/></div>
+</section>}
 
-function Benefits({lang}){const items=lang==="ar"?[[Tag,"أسعار منافسة","أفضل الأسعار دائمًا"],[Zap,"تسليم فوري","مفتاحك خلال دقائق"],[ShieldCheck,"دفع آمن","طرق دفع موثوقة"],[Headphones,"دعم سريع","مساعدتك دائمًا"]]:[[Tag,"Great Prices","Always competitive"],[Zap,"Instant Delivery","Your key in minutes"],[ShieldCheck,"Secure Payment","Trusted payment methods"],[Headphones,"Fast Support","We're here to help"]];return <div className="benefits">{items.map(([I,t,s])=><div className="benefit" key={t}><I/><span><b>{t}</b><small>{s}</small></span></div>)}</div>}
+function Benefits({lang}){const items=lang==="ar"?[
+[Tag,"أسعار منافسة","أفضل الأسعار دائمًا"],
+[Zap,"تسليم فوري","حسابك خلال دقائق"],
+[ShieldCheck,"دفع آمن","طرق دفع موثوقة"],
+[Headphones,"دعم سريع","مساعدتك دائمًا"]
+]:[
+[Tag,"Great Prices","Always competitive"],
+[Zap,"Instant Delivery","Your account in minutes"],
+[ShieldCheck,"Secure Payment","Trusted payment methods"],
+[Headphones,"Fast Support","We're here to help"]
+];
+return <div className="benefits">{items.map(([I,t,s])=><div className="benefit" key={t}><I/><span><b>{t}</b><small>{s}</small></span></div>)}</div>}
 
-function Categories({lang}){const[selected,setSelected]=useState(lang==="ar"?"كل الألعاب":"All Games");const names=lang==="ar"?["كل الألعاب","ألعاب الأكشن","مغامرات","تقمص الأدوار","ألعاب الرياضة","ألعاب السيارات","ألعاب الاستراتيجية","ألعاب الرعب"]:["All Games","Action","Adventure","RPG","Sports","Racing","Strategy","Horror"];return <section id="categories" className="section"><div className="heading"><div><small>{lang==="ar"?"استكشف":"Explore"}</small><h2>{lang==="ar"?"الأقسام الرئيسية":"Main Categories"} <Flame/></h2></div><a className="outline" href="#games">{lang==="ar"?"عرض الكل":"View All"} <ChevronLeft/></a></div>
- <div className="categories">{cats.map(([_,I],idx)=>{const n=names[idx];return <button className={selected===n?"category selected":"category"} onClick={()=>setSelected(n)} key={n}><I/><span>{n}</span></button>})}</div></section>
-}
+function Categories({lang,selected,onSelect,onViewAll}){
+const names=lang==="ar"?["كل الألعاب","ألعاب الأكشن","مغامرات","تقمص الأدوار","ألعاب الرياضة","ألعاب السيارات","ألعاب الاستراتيجية","ألعاب الرعب"]:["All Games","Action","Adventure","RPG","Sports","Racing","Strategy","Horror"];
+const activeName=lang==="ar"?selected:(
+selected==="كل الألعاب"?"All Games":
+selected==="ألعاب الأكشن"?"Action":
+selected==="مغامرات"?"Adventure":
+selected==="تقمص الأدوار"?"RPG":
+selected==="ألعاب الرياضة"?"Sports":
+selected==="ألعاب السيارات"?"Racing":
+selected==="ألعاب الاستراتيجية"?"Strategy":"Horror"
+);
+return <section id="categories" className="section">
+<div className="heading"><div><small>{lang==="ar"?"استكشف":"Explore"}</small><h2>{lang==="ar"?"الأقسام الرئيسية":"Main Categories"} <Flame/></h2></div>
+<button className="outline" onClick={onViewAll}>{lang==="ar"?"عرض الكل":"View All"} <ChevronLeft/></button></div>
+<div className="categories">{cats.map(([ar,I],idx)=>{const n=names[idx];return <button className={activeName===n?"category selected":"category"} onClick={()=>onSelect(ar)} key={n}><I/><span>{n}</span></button>})}</div>
+</section>}
 
-function Card({g,onAdd,lang,onOpen}){const[liked,setLiked]=useState(false);const genre={"أكشن":"Action","رياضة":"Sports","مغامرات":"Adventure","تقمص الأدوار":"RPG","سيارات":"Racing"};return <article className="card" onClick={()=>onOpen(g)}><div className="pic"><img src={g.img} loading="lazy" alt={g.t}/><div className="card-top"><span className="deal-pill">-{g.d}%</span><button aria-label={lang==="ar"?"إضافة للمفضلة":"Add to wishlist"} className={liked?"like liked":"like"} onClick={e=>{e.stopPropagation();setLiked(!liked)}}><Heart/></button></div><div className="card-bottom"><span>{lang==="ar"?"حساب":"Account"}</span></div></div><div className="info"><div className="meta"><small>{lang==="ar"?g.g:(genre[g.g]||g.g)}</small><span>STEAM</span></div><h3 title={g.t}>{g.t}</h3><div className="price-row"><div className="price"><del>${g.o.toFixed(2)}</del><strong>${g.p.toFixed(2)}</strong></div><button className="add-cart" aria-label={lang==="ar"?"إضافة للسلة":"Add to cart"} onClick={e=>{e.stopPropagation();onAdd()}}><ShoppingCart/><span>{lang==="ar"?"أضف للسلة":"Add to cart"}</span></button></div></div></article>}
+function Card({g,onAdd,lang,onOpen}){
+const[liked,setLiked]=useState(false);
+return <article className="card" onClick={()=>onOpen(g)}>
+<div className="pic"><img src={g.img} loading="lazy" alt={g.t}/>
+<div className="card-top"><span className="deal-pill">-{g.d}%</span>
+<button aria-label={lang==="ar"?"إضافة للمفضلة":"Add to wishlist"} className={liked?"like liked":"like"} onClick={e=>{e.stopPropagation();setLiked(v=>!v)}}><Heart/></button></div>
+<div className="card-bottom"><span>{lang==="ar"?"حساب":"Account"}</span></div></div>
+<div className="info"><div className="meta"><small>{lang==="ar"?g.g:(genre[g.g]||g.g)}</small><span>STEAM</span></div>
+<h3 title={g.t}>{g.t}</h3><div className="price-row"><div className="price"><del>${g.o.toFixed(2)}</del><strong>${g.p.toFixed(2)}</strong></div>
+<button className="add-cart" aria-label={lang==="ar"?"إضافة للسلة":"Add to cart"} onClick={e=>{e.stopPropagation();onAdd(g)}}><ShoppingCart/><span>{lang==="ar"?"أضف للسلة":"Add to cart"}</span></button>
+</div></div></article>}
 
-function Games({id,title,list,q,onAdd,lang,onOpen}){const filtered=useMemo(()=>list.filter(x=>!q||(x.t+" "+x.g).toLowerCase().includes(q.toLowerCase())),[list,q]);return <section id={id} className="section"><div className="heading"><div><small>{lang==="ar"?"اختياراتنا":"Our Picks"}</small><h2>{title} <Flame/></h2></div><a className="outline" href="#games">{lang==="ar"?"عرض الكل":"View All"} <ChevronLeft/></a></div>{filtered.length?<div className="grid">{filtered.map(g=><Card key={g.id} g={g} lang={lang} onAdd={onAdd} onOpen={onOpen}/>)}</div>:<div className="empty">{lang==="ar"?"لا توجد ألعاب مطابقة 😔":"No matching games 😔"}</div>}</section>}
+function Games({id,title,list,q,category,onAdd,lang,onOpen,onViewAll}){
+const filtered=useMemo(()=>{
+const categoryGenre=categoryMap[category]??null;
+const query=q.trim().toLowerCase();
+return list.filter(x=>{
+const searchable=[x.t,x.g,genre[x.g]||""].join(" ").toLowerCase();
+return (!query||searchable.includes(query))&&(!categoryGenre||x.g===categoryGenre);
+});
+},[list,q,category]);
+return <section id={id} className="section"><div className="heading"><div><small>{lang==="ar"?"اختياراتنا":"Our Picks"}</small><h2>{title} <Flame/></h2></div>
+<button className="outline" onClick={onViewAll}>{lang==="ar"?"عرض الكل":"View All"} <ChevronLeft/></button></div>
+{filtered.length?<div className="grid">{filtered.map(g=><Card key={g.id} g={g} lang={lang} onAdd={onAdd} onOpen={onOpen}/>)}</div>:<div className="empty">{lang==="ar"?"لا توجد ألعاب مطابقة 😔":"No matching games 😔"}</div>}</section>}
 
 function Promo({lang}){return <section id="offers" className="promo"><GiftFallback/><div><strong>{lang==="ar"?"عروض خاصة":"Special Offers"}</strong><b>{lang==="ar"?"خصومات تصل إلى 80%":"Up to 80% off"}</b></div><a className="primary small" href="#games">{lang==="ar"?"تصفح الآن":"Shop Now"} <ChevronLeft/></a></section>}
 function GiftFallback(){return <span className="gift">🎁</span>}
+
 function GameDetails({g,lang,onClose,onAdd}){
- if(!g)return null;
- const genre={"أكشن":"Action","رياضة":"Sports","مغامرات":"Adventure","تقمص الأدوار":"RPG","سيارات":"Racing"};
- const checks=lang==="ar"?["حساب Steam","تسليم فوري","دعم كامل"]:["Steam account","Instant delivery","Full support"];
- return <div className="details-overlay" onClick={onClose}>
-  <div className="details" onClick={e=>e.stopPropagation()}>
-   <button className="details-close" aria-label={lang==="ar"?"إغلاق":"Close"} onClick={onClose}><X/></button>
-   <div className="details-cover"><img src={g.img} alt={g.t}/><div className="details-gradient"/></div>
-   <div className="details-body">
-    <div className="details-meta"><span>{lang==="ar"?g.g:(genre[g.g]||g.g)}</span><b>STEAM</b></div>
-    <h1>{g.t}</h1>
-    <p>{descriptions[g.id]?.[lang]||descriptions[g.id]?.en}</p>
-    <div className="details-tags">{checks.map(x=><span key={x}><Check/> {x}</span>)}</div>
-    <div className="details-buy">
-      <div><del>${g.o.toFixed(2)}</del><strong>${g.p.toFixed(2)}</strong><em>-{g.d}%</em></div>
-      <button className="details-cart" onClick={()=>onAdd()}><ShoppingCart/> {lang==="ar"?"أضف للسلة":"Add to cart"}</button>
-    </div>
-    <div className="details-note"><Gamepad2/> {lang==="ar"?"منتج رقمي — لا يوجد شحن أو انتظار":"Digital product — no shipping or waiting"}</div>
-   </div>
-  </div>
- </div>
-}
+if(!g)return null;
+const checks=lang==="ar"?["حساب Steam","تسليم فوري","دعم كامل"]:["Steam account","Instant delivery","Full support"];
+return <div className="details-overlay" onClick={onClose}><div className="details" onClick={e=>e.stopPropagation()}>
+<button className="details-close" aria-label={lang==="ar"?"إغلاق":"Close"} onClick={onClose}><X/></button>
+<div className="details-cover"><img src={g.img} alt={g.t}/><div className="details-gradient"/></div>
+<div className="details-body"><div className="details-meta"><span>{lang==="ar"?g.g:(genre[g.g]||g.g)}</span><b>STEAM</b></div>
+<h1>{g.t}</h1><p>{descriptions[g.id]?.[lang]||descriptions[g.id]?.en}</p>
+<div className="details-tags">{checks.map(x=><span key={x}><Check/> {x}</span>)}</div>
+<div className="details-buy"><div><del>${g.o.toFixed(2)}</del><strong>${g.p.toFixed(2)}</strong><em>-{g.d}%</em></div>
+<button className="details-cart" onClick={()=>onAdd(g)}><ShoppingCart/> {lang==="ar"?"أضف للسلة":"Add to cart"}</button></div>
+<div className="details-note"><Gamepad2/> {lang==="ar"?"منتج رقمي — لا يوجد شحن أو انتظار":"Digital product — no shipping or waiting"}</div>
+</div></div></div>}
 
 function Cart({items,lang,onClose,onIncrease,onDecrease,onRemove,onCheckout}){
- const total=items.reduce((sum,item)=>sum+(Number(item.g.p)||0)*item.qty,0);
- const fmt=n=>`$${(Number(n)||0).toFixed(2)}`;
- return <div className="cart-overlay" onClick={onClose}>
-  <aside className="cart-panel" dir={lang==="ar"?"rtl":"ltr"} onClick={e=>e.stopPropagation()}>
-   <div className="cart-head">
-    <div><small>{lang==="ar"?"مشترياتك":"Your shopping"}</small><h2>{lang==="ar"?"سلة التسوق":"Shopping Cart"}</h2></div>
-    <button className="cart-close" aria-label={lang==="ar"?"إغلاق":"Close"} onClick={onClose}><X/></button>
-   </div>
-   <div className="cart-divider"/>
-   {items.length?<div className="cart-list">{items.map(item=><div className="cart-item" key={item.id}>
-    <img src={item.img} alt={item.t}/>
-    <div className="cart-item-main">
-      <div className="cart-item-top"><span className="cart-type">{lang==="ar"?"حساب Steam":"Steam Account"}</span><button className="cart-remove" aria-label={lang==="ar"?"حذف اللعبة":"Remove game"} onClick={()=>onRemove(item.id)}><X/></button></div>
-      <h3>{item.t}</h3>
-      <strong>{fmt(item.g.p)}</strong>
-      <div className="qty"><button onClick={()=>onDecrease(item.id)} aria-label={lang==="ar"?"تقليل الكمية":"Decrease quantity"}>−</button><b>{item.qty}</b><button onClick={()=>onIncrease(item.id)} aria-label={lang==="ar"?"زيادة الكمية":"Increase quantity"}>+</button></div>
-    </div>
-   </div>)}</div>:<div className="cart-empty"><ShoppingCart/><h3>{lang==="ar"?"السلة فارغة":"Your cart is empty"}</h3><p>{lang==="ar"?"أضف لعبة من المتجر وستظهر هنا.":"Add a game from the store and it will appear here."}</p><button onClick={onClose}>{lang==="ar"?"متابعة التسوق":"Continue shopping"}</button></div>}
-   <div className="cart-footer">
-    <div className="cart-total"><span>{lang==="ar"?"الإجمالي":"Total"}</span><strong>{fmt(total)}</strong></div>
-    <button className="checkout" disabled={!items.length} onClick={onCheckout}>{lang==="ar"?"إتمام الشراء":"Checkout"}</button>
-    <small>{lang==="ar"?"سيتم تفعيل الدفع بعد ربط بوابة الدفع.":"Checkout will be enabled after payment integration."}</small>
-   </div>
-  </aside>
- </div>
-}
+const total=items.reduce((sum,item)=>sum+(Number(item.g?.p??item.p)||0)*item.qty,0);
+const fmt=n=>`$${(Number(n)||0).toFixed(2)}`;
+return <div className="cart-overlay" onClick={onClose}><aside className="cart-panel" dir={lang==="ar"?"rtl":"ltr"} onClick={e=>e.stopPropagation()}>
+<div className="cart-head"><div><small>{lang==="ar"?"مشترياتك":"Your shopping"}</small><h2>{lang==="ar"?"سلة التسوق":"Shopping Cart"}</h2></div><button className="cart-close" aria-label={lang==="ar"?"إغلاق":"Close"} onClick={onClose}><X/></button></div>
+<div className="cart-divider"/>
+{items.length?<div className="cart-list">{items.map(item=><div className="cart-item" key={item.id}><img src={item.img} alt={item.t}/>
+<div className="cart-item-main"><div className="cart-item-top"><span className="cart-type">{lang==="ar"?"حساب Steam":"Steam Account"}</span><button className="cart-remove" aria-label={lang==="ar"?"حذف اللعبة":"Remove game"} onClick={()=>onRemove(item.id)}><X/></button></div>
+<h3>{item.t}</h3><strong>{fmt(item.p??item.g?.p)}</strong><div className="qty"><button onClick={()=>onDecrease(item.id)}>−</button><b>{item.qty}</b><button onClick={()=>onIncrease(item.id)}>+</button></div></div></div>)}</div>
+:<div className="cart-empty"><ShoppingCart/><h3>{lang==="ar"?"السلة فارغة":"Your cart is empty"}</h3><p>{lang==="ar"?"أضف لعبة من المتجر وستظهر هنا.":"Add a game from the store and it will appear here."}</p><button onClick={onClose}>{lang==="ar"?"متابعة التسوق":"Continue shopping"}</button></div>}
+<div className="cart-footer"><div className="cart-total"><span>{lang==="ar"?"الإجمالي":"Total"}</span><strong>{fmt(total)}</strong></div>
+<button className="checkout" disabled={!items.length} onClick={onCheckout}>{lang==="ar"?"إتمام الشراء":"Checkout"}</button>
+<small>{lang==="ar"?"سيتم تفعيل الدفع بعد ربط بوابة الدفع.":"Checkout will be enabled after payment integration."}</small></div>
+</aside></div>}
 
 function Trust({lang}){const items=lang==="ar"?[["منصة موثوقة","تجربة شراء آمنة"],["آلاف العملاء السعداء","تقييمات حقيقية"],["متاح في الدول العربية","دعم كامل للعربية"]]:[["Trusted Platform","Safe shopping experience"],["Happy Customers","Real reviews"],["Built for gamers","Full English support"]];return <div className="trust">{items.map(([a,b])=><div key={a}><span>✓</span><p><b>{a}</b><small>{b}</small></p></div>)}</div>}
-function Bottom({lang}){const items=lang==="ar"?[[Home,"الرئيسية","home"],[Grid2X2,"الأقسام","categories"],[Search,"بحث","games"],[Heart,"المفضلة","best"],[UserRound,"حسابي",""]]:[[Home,"Home","home"],[Grid2X2,"Categories","categories"],[Search,"Search","games"],[Heart,"Wishlist","best"],[UserRound,"Account",""]];return <div className="bottom">{items.map(([I,t,to],i)=><a className={i===0?"active":""} href={to?`#${to}`:"#"} key={t}><I/><span>{t}</span></a>)}</div>}
+
+function Bottom({lang,onWishlist,onAccount}){
+const items=lang==="ar"?[[Home,"الرئيسية","home"],[Grid2X2,"الأقسام","categories"],[Search,"بحث","games"]]:[[Home,"Home","home"],[Grid2X2,"Categories","categories"],[Search,"Search","games"]];
+return <div className="bottom">{items.map(([I,t,to])=><a className="active" href={`#${to}`} key={t}><I/><span>{t}</span></a>)}<button onClick={onWishlist}><Heart/><span>{lang==="ar"?"المفضلة":"Wishlist"}</span></button><button onClick={onAccount}><UserRound/><span>{lang==="ar"?"حسابي":"Account"}</span></button></div>}
 
 function App(){
- const[q,setQ]=useState("");
- const[lang,setLang]=useState("ar");
- const[selectedGame,setSelectedGame]=useState(null);
- const[cartOpen,setCartOpen]=useState(false);
- const[cartItems,setCartItems]=useState([]);
- const addToCart=g=>{setCartItems(items=>{const found=items.find(x=>x.id===g.id);return found?items.map(x=>x.id===g.id?{...x,qty:x.qty+1}:x):[...items,{...g,qty:1}]});setCartOpen(true)};
- const increase=id=>setCartItems(items=>items.map(x=>x.id===id?{...x,qty:x.qty+1}:x));
- const decrease=id=>setCartItems(items=>items.map(x=>x.id===id?{...x,qty:Math.max(1,x.qty-1)}:x));
- const remove=id=>setCartItems(items=>items.filter(x=>x.id!==id));
- const count=cartItems.reduce((sum,x)=>sum+x.qty,0);
- return <div className={"app "+lang} dir={lang==="ar"?"rtl":"ltr"}>
-  <Header q={q} setQ={setQ} count={count} lang={lang} setLang={setLang} onCart={()=>setCartOpen(true)}/>
-  <main id="home"><Hero lang={lang}/><Benefits lang={lang}/><Categories lang={lang}/>
-   <Games id="best" title={lang==="ar"?"الأكثر مبيعًا":"Best Sellers"} list={games.slice(0,4)} q={q} lang={lang} onAdd={addToCart} onOpen={setSelectedGame}/>
-   <Promo lang={lang}/>
-   <Games id="games" title={lang==="ar"?"ألعاب مميزة":"Featured Games"} list={games.slice(4)} q={q} lang={lang} onAdd={addToCart} onOpen={setSelectedGame}/>
-   <Trust lang={lang}/>
-  </main>
-  <footer><Logo lang={lang}/><span>© 2026 ToyGames — {lang==="ar"?"ألعاب أكثر متعة بأسعار أفضل":"More fun, better prices."}</span></footer>
-  <Bottom lang={lang}/>
-  {selectedGame&&<GameDetails g={selectedGame} lang={lang} onClose={()=>setSelectedGame(null)} onAdd={()=>addToCart(selectedGame)}/>}
-  {cartOpen&&<Cart items={cartItems} lang={lang} onClose={()=>setCartOpen(false)} onIncrease={increase} onDecrease={decrease} onRemove={remove} onCheckout={()=>{}}/>}
- </div>
+const[q,setQ]=useState("");
+const[lang,setLang]=useState("ar");
+const[selectedCategory,setSelectedCategory]=useState("كل الألعاب");
+const[selectedGame,setSelectedGame]=useState(null);
+const[cartOpen,setCartOpen]=useState(false);
+const[cartItems,setCartItems]=useState([]);
+const[notice,setNotice]=useState("");
+
+const showNotice=message=>{setNotice(message);window.clearTimeout(showNotice.timer);showNotice.timer=window.setTimeout(()=>setNotice(""),2400)};
+const goTo=target=>document.getElementById(target)?.scrollIntoView({behavior:"smooth",block:"start"});
+const addToCart=g=>{if(!g)return;setCartItems(items=>{const found=items.find(x=>x.id===g.id);return found?items.map(x=>x.id===g.id?{...x,qty:x.qty+1}:x):[...items,{...g,qty:1}]});setCartOpen(true)};
+const increase=id=>setCartItems(items=>items.map(x=>x.id===id?{...x,qty:x.qty+1}:x));
+const decrease=id=>setCartItems(items=>items.map(x=>x.id===id?{...x,qty:Math.max(1,x.qty-1)}:x));
+const remove=id=>setCartItems(items=>items.filter(x=>x.id!==id));
+const count=cartItems.reduce((sum,x)=>sum+x.qty,0);
+const selectCategory=category=>{setSelectedCategory(category);requestAnimationFrame(()=>goTo("games"))};
+const clearCategory=()=>{setSelectedCategory("كل الألعاب");requestAnimationFrame(()=>goTo("games"))};
+const accountNotice=()=>showNotice(lang==="ar"?"صفحة الحساب قادمة قريبًا":"Account page is coming soon");
+const wishlistAction=()=>goTo("best");
+const checkoutNotice=()=>showNotice(lang==="ar"?"الدفع سيتم تفعيله بعد ربط بوابة الدفع":"Checkout will be enabled after payment integration");
+
+return <div className={"app "+lang} dir={lang==="ar"?"rtl":"ltr"}>
+<Header q={q} setQ={setQ} count={count} lang={lang} setLang={setLang} onCart={()=>setCartOpen(true)} onWishlist={wishlistAction} onAccount={accountNotice}/>
+<main id="home"><Hero lang={lang}/><Benefits lang={lang}/>
+<Categories lang={lang} selected={selectedCategory} onSelect={selectCategory} onViewAll={clearCategory}/>
+<Games id="best" title={lang==="ar"?"الأكثر مبيعًا":"Best Sellers"} list={games.slice(0,4)} q={q} category={selectedCategory} lang={lang} onAdd={addToCart} onOpen={setSelectedGame} onViewAll={clearCategory}/>
+<Promo lang={lang}/>
+<Games id="games" title={lang==="ar"?"ألعاب مميزة":"Featured Games"} list={games.slice(4)} q={q} category={selectedCategory} lang={lang} onAdd={addToCart} onOpen={setSelectedGame} onViewAll={clearCategory}/>
+<Trust lang={lang}/></main>
+<footer><Logo lang={lang}/><span>© 2026 ToyGames — {lang==="ar"?"ألعاب أكثر متعة بأسعار أفضل":"More fun, better prices."}</span></footer>
+<Bottom lang={lang} onWishlist={wishlistAction} onAccount={accountNotice}/>
+{selectedGame&&<GameDetails g={selectedGame} lang={lang} onClose={()=>setSelectedGame(null)} onAdd={addToCart}/>}
+{cartOpen&&<Cart items={cartItems} lang={lang} onClose={()=>setCartOpen(false)} onIncrease={increase} onDecrease={decrease} onRemove={remove} onCheckout={checkoutNotice}/>}
+{notice&&<div className="toast" role="status">{notice}</div>}
+</div>
 }
 createRoot(document.getElementById("root")).render(<App/>);
