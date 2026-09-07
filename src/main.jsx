@@ -1,5 +1,6 @@
-import React, { useMemo, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import { createRoot } from "react-dom/client";
+import { loadSteamCatalog } from "./steamCatalog";
 import {
   Search, ShoppingCart, Heart, UserRound, ChevronRight, Menu, X,
   Flame, Tag, Zap, ShieldCheck, Headphones, Grid2X2, Trophy, Car,
@@ -8,14 +9,14 @@ import {
 import "./styles.css";
 
 const games = [
-  { id:1, t:"Red Dead Redemption 2", g:"Action", p:17.99, o:59.99, d:70, img:"https://cdn.akamai.steamstatic.com/steam/apps/1174180/header.jpg" },
-  { id:2, t:"EA SPORTS FC 24", g:"Sports", p:27.99, o:69.99, d:60, img:"https://cdn.akamai.steamstatic.com/steam/apps/1222670/header.jpg" },
-  { id:3, t:"Cyberpunk 2077", g:"Adventure", p:19.99, o:59.99, d:67, img:"https://cdn.akamai.steamstatic.com/steam/apps/1091500/header.jpg" },
-  { id:4, t:"Grand Theft Auto V", g:"Action", p:20.99, o:59.99, d:65, img:"https://cdn.akamai.steamstatic.com/steam/apps/271590/header.jpg" },
-  { id:5, t:"The Witcher 3: Wild Hunt", g:"Adventure", p:9.99, o:39.99, d:75, img:"https://cdn.akamai.steamstatic.com/steam/apps/292030/header.jpg" },
-  { id:6, t:"Elden Ring", g:"RPG", p:34.99, o:59.99, d:42, img:"https://cdn.akamai.steamstatic.com/steam/apps/1245620/header.jpg" },
-  { id:7, t:"Hogwarts Legacy", g:"Adventure", p:21.99, o:59.99, d:63, img:"https://cdn.akamai.steamstatic.com/steam/apps/990080/header.jpg" },
-  { id:8, t:"Forza Horizon 5", g:"Racing", p:24.99, o:59.99, d:58, img:"https://cdn.akamai.steamstatic.com/steam/apps/1551360/header.jpg" }
+  { id:1, steamAppId:1174180, t:"Red Dead Redemption 2", g:"Action", p:17.99, o:59.99, d:70, img:"https://cdn.akamai.steamstatic.com/steam/apps/1174180/header.jpg" },
+  { id:2, steamAppId:2361850, t:"EA SPORTS FC 24", g:"Sports", p:27.99, o:69.99, d:60, img:"https://cdn.akamai.steamstatic.com/steam/apps/2361850/header.jpg" },
+  { id:3, steamAppId:1091500, t:"Cyberpunk 2077", g:"Adventure", p:19.99, o:59.99, d:67, img:"https://cdn.akamai.steamstatic.com/steam/apps/1091500/header.jpg" },
+  { id:4, steamAppId:271590, t:"Grand Theft Auto V", g:"Action", p:20.99, o:59.99, d:65, img:"https://cdn.akamai.steamstatic.com/steam/apps/271590/header.jpg" },
+  { id:5, steamAppId:292030, t:"The Witcher 3: Wild Hunt", g:"Adventure", p:9.99, o:39.99, d:75, img:"https://cdn.akamai.steamstatic.com/steam/apps/292030/header.jpg" },
+  { id:6, steamAppId:1245620, t:"Elden Ring", g:"RPG", p:34.99, o:59.99, d:42, img:"https://cdn.akamai.steamstatic.com/steam/apps/1245620/header.jpg" },
+  { id:7, steamAppId:990080, t:"Hogwarts Legacy", g:"Adventure", p:21.99, o:59.99, d:63, img:"https://cdn.akamai.steamstatic.com/steam/apps/990080/header.jpg" },
+  { id:8, steamAppId:1551360, t:"Forza Horizon 5", g:"Racing", p:24.99, o:59.99, d:58, img:"https://cdn.akamai.steamstatic.com/steam/apps/1551360/header.jpg" }
 ];
 
 const descriptions = {
@@ -123,7 +124,7 @@ function GameDetails({ g, onClose, onAdd }) {
         <div className="details-body">
           <div className="details-meta"><span>{g.g}</span><b>STEAM</b></div>
           <h1>{g.t}</h1>
-          <p>{descriptions[g.id]?.en}</p>
+          <p>{g.description || descriptions[g.id]?.en}</p>
           <div className="details-tags">{checks.map(x => <span key={x}><Check /> {x}</span>)}</div>
           <div className="details-buy">
             <div><del>${g.o.toFixed(2)}</del><strong>${g.p.toFixed(2)}</strong><em>-{g.d}%</em></div>
@@ -185,6 +186,9 @@ function Bottom() {
 }
 function App() {
   const [q,setQ]=useState("");
+  const [catalog,setCatalog]=useState(games);
+  const [catalogLoading,setCatalogLoading]=useState(true);
+  const [catalogError,setCatalogError]=useState("");
   const [selectedGame,setSelectedGame]=useState(null);
   const [cartOpen,setCartOpen]=useState(false);
   const [cartItems,setCartItems]=useState([]);
@@ -194,6 +198,17 @@ function App() {
   const decrease=id=>setCartItems(items=>items.map(x=>x.id===id?{...x,qty:Math.max(1,x.qty-1)}:x));
   const remove=id=>setCartItems(items=>items.filter(x=>x.id!==id));
   const count=cartItems.reduce((sum,x)=>sum+x.qty,0);
-  return <div className="app" dir="ltr"><Header q={q} setQ={setQ} count={count} onCart={()=>setCartOpen(true)}/><main id="home"><Hero/><Benefits/><Categories selected={selectedCategory} setSelected={setSelectedCategory}/><Games id="best" title="Best Sellers" list={games.slice(0,4)} q={q} selectedCategory={selectedCategory} onAdd={addToCart} onOpen={setSelectedGame}/><Promo/><Games id="games" title="Featured Games" list={games.slice(4)} q={q} selectedCategory={selectedCategory} onAdd={addToCart} onOpen={setSelectedGame}/><Trust/></main><footer><Logo/><span>© 2026 ToyGames — More fun, better prices.</span></footer><Bottom/>{selectedGame&&<GameDetails g={selectedGame} onClose={()=>setSelectedGame(null)} onAdd={addToCart}/>} {cartOpen&&<Cart items={cartItems} onClose={()=>setCartOpen(false)} onIncrease={increase} onDecrease={decrease} onRemove={remove} onCheckout={()=>{}}/>}</div>;
+  useEffect(() => {
+    let cancelled = false;
+    loadSteamCatalog(games).then(next => {
+      if (!cancelled) { setCatalog(next); setCatalogLoading(false); }
+    }).catch(() => {
+      if (!cancelled) { setCatalogError("Using saved catalog"); setCatalogLoading(false); }
+    });
+    return () => { cancelled = true; };
+  }, []);
+  const bestSellers = catalog.slice(0,4);
+  const featured = catalog.slice(4);
+  return <div className="app" dir="ltr"><Header q={q} setQ={setQ} count={count} onCart={()=>setCartOpen(true)}/><main id="home"><Hero/><Benefits/><Categories selected={selectedCategory} setSelected={setSelectedCategory}/><Games id="best" title="Best Sellers" list={bestSellers} q={q} selectedCategory={selectedCategory} onAdd={addToCart} onOpen={setSelectedGame}/><Promo/><Games id="games" title="Featured Games" list={featured} q={q} selectedCategory={selectedCategory} onAdd={addToCart} onOpen={setSelectedGame}/><Trust/>{catalogLoading&&<div className="catalog-status">Loading live Steam game data…</div>}{catalogError&&<div className="catalog-status muted">{catalogError}</div>}</main><footer><Logo/><span>© 2026 ToyGames — More fun, better prices.</span></footer><Bottom/>{selectedGame&&<GameDetails g={selectedGame} onClose={()=>setSelectedGame(null)} onAdd={addToCart}/>} {cartOpen&&<Cart items={cartItems} onClose={()=>setCartOpen(false)} onIncrease={increase} onDecrease={decrease} onRemove={remove} onCheckout={()=>{}}/>}</div>;
 }
 createRoot(document.getElementById("root")).render(<App />);

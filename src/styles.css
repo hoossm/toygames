@@ -318,3 +318,5 @@ footer .logo{width:110px;height:60px}
 .app.en .heading{text-align:left}
 .app.en .benefit{direction:ltr}
 .app.en .cart-panel{direction:ltr}
+
+.catalog-status{margin:8px 0 24px;text-align:center;color:#888;font-size:11px;font-weight:700}.catalog-status.muted{color:#666}
