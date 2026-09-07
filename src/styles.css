@@ -28,7 +28,7 @@ nav a:hover,nav a.active{color:var(--gold);border-color:var(--gold)}
 .cart b{position:absolute;top:-1px;right:-2px;min-width:17px;height:17px;padding:0 4px;border-radius:10px;background:var(--orange);font:700 10px Arial;display:grid;place-items:center}
 .mobile-menu{display:none}
 
-main{max-width:1180px;margin:auto;padding:16px 22px 80px}
+main{max-width:1180px;margin:auto;padding:16px 22px 28px}
 .hero{min-height:450px;border-radius:20px;overflow:hidden;position:relative;display:flex;align-items:center;padding:45px 55px;background:linear-gradient(90deg,rgba(0,0,0,.94),rgba(0,0,0,.58) 45%,rgba(0,0,0,.08)),url("https://cdn.akamai.steamstatic.com/steam/apps/292030/library_hero.jpg") center/cover no-repeat}
 .hero:after{content:"";position:absolute;inset:0;pointer-events:none}
 .hero-content{position:relative;z-index:2;max-width:560px}
@@ -319,4 +319,3 @@ footer .logo{width:110px;height:60px}
 .app.en .benefit{direction:ltr}
 .app.en .cart-panel{direction:ltr}
 
-.catalog-status{margin:8px 0 24px;text-align:center;color:#888;font-size:11px;font-weight:700}.catalog-status.muted{color:#666}

@@ -178,8 +178,6 @@ function Bottom() {
 function App() {
   const [q,setQ]=useState("");
   const [catalog,setCatalog]=useState(games);
-  const [catalogLoading,setCatalogLoading]=useState(true);
-  const [catalogError,setCatalogError]=useState("");
   const [selectedGame,setSelectedGame]=useState(null);
   const [cartOpen,setCartOpen]=useState(false);
   const [cartItems,setCartItems]=useState([]);
@@ -192,14 +190,14 @@ function App() {
   useEffect(() => {
     let cancelled = false;
     loadSteamCatalog(games).then(next => {
-      if (!cancelled) { setCatalog(next); setCatalogLoading(false); }
+      if (!cancelled) setCatalog(next);
     }).catch(() => {
-      if (!cancelled) { setCatalogError("Using saved catalog"); setCatalogLoading(false); }
+      // Keep the saved catalog silently if Steam is unavailable.
     });
     return () => { cancelled = true; };
   }, []);
   const bestSellers = catalog.slice(0,4);
   const featured = catalog.slice(4);
-  return <div className="app" dir="ltr"><Header q={q} setQ={setQ} count={count} onCart={()=>setCartOpen(true)}/><main id="home"><Hero/><Benefits/><Categories selected={selectedCategory} setSelected={setSelectedCategory}/><Games id="best" title="Best Sellers" list={bestSellers} q={q} selectedCategory={selectedCategory} onAdd={addToCart} onOpen={setSelectedGame}/><Promo/><Games id="games" title="Featured Games" list={featured} q={q} selectedCategory={selectedCategory} onAdd={addToCart} onOpen={setSelectedGame}/><Trust/>{catalogLoading&&<div className="catalog-status">Loading live Steam game data…</div>}{catalogError&&<div className="catalog-status muted">{catalogError}</div>}</main><footer><Logo/><span>© 2026 ToyGames — More fun, better prices.</span></footer><Bottom/>{selectedGame&&<GameDetails g={selectedGame} onClose={()=>setSelectedGame(null)} onAdd={addToCart}/>} {cartOpen&&<Cart items={cartItems} onClose={()=>setCartOpen(false)} onIncrease={increase} onDecrease={decrease} onRemove={remove} onCheckout={()=>{}}/>}</div>;
+  return <div className="app" dir="ltr"><Header q={q} setQ={setQ} count={count} onCart={()=>setCartOpen(true)}/><main id="home"><Hero/><Benefits/><Categories selected={selectedCategory} setSelected={setSelectedCategory}/><Games id="best" title="Best Sellers" list={bestSellers} q={q} selectedCategory={selectedCategory} onAdd={addToCart} onOpen={setSelectedGame}/><Promo/><Games id="games" title="Featured Games" list={featured} q={q} selectedCategory={selectedCategory} onAdd={addToCart} onOpen={setSelectedGame}/><Trust/></main><footer><Logo/><span>© 2026 ToyGames — More fun, better prices.</span></footer><Bottom/>{selectedGame&&<GameDetails g={selectedGame} onClose={()=>setSelectedGame(null)} onAdd={addToCart}/>} {cartOpen&&<Cart items={cartItems} onClose={()=>setCartOpen(false)} onIncrease={increase} onDecrease={decrease} onRemove={remove} onCheckout={()=>{}}/>}</div>;
 }
 createRoot(document.getElementById("root")).render(<App />);
