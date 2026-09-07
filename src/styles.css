@@ -14,12 +14,12 @@ header{position:sticky;top:0;z-index:50;background:rgba(24,24,24,.94);backdrop-f
 .logo{display:flex;align-items:center;justify-content:center;width:178px;height:88px;flex:0 0 178px;overflow:visible;line-height:0;transform:none!important}
 .logo img{display:block;width:100%;height:100%;object-fit:contain;object-position:center}
 nav{display:flex;align-items:center;gap:30px;flex:1}
-nav a{font-size:15px;font-weight:800;color:#cfcfcf;padding:26px 0 22px;border-bottom:2px solid transparent}
+nav a{font-size:16px;font-weight:800;color:#cfcfcf;padding:26px 0 22px;border-bottom:2px solid transparent}
 nav a:hover,nav a.active{color:var(--gold);border-color:var(--gold)}
 .actions{display:flex;align-items:center;gap:6px;min-width:0}
 .search{width:265px;height:46px;border:1px solid #303030;background:#242424;border-radius:23px;display:flex;align-items:center;gap:8px;padding:0 13px}
 .search svg{width:19px;color:var(--gold);flex:0 0 auto}
-.search input{width:100%;min-width:0;border:0;outline:0;background:transparent;color:#fff;font-size:14px}
+.search input{width:100%;min-width:0;border:0;outline:0;background:transparent;color:#fff;font-size:15px}
 .search input::placeholder{color:#777}
 .icon,.cart,.mobile-menu{border:0;background:transparent;color:#ddd;display:grid;place-items:center}
 .icon{width:42px;height:42px}
@@ -38,7 +38,7 @@ main{max-width:1180px;margin:auto;padding:16px 22px 80px}
 .eyebrow svg{width:17px;fill:currentColor}
 .hero h1{font-size:clamp(36px,5vw,60px);line-height:1.15;margin:7px 0 14px;letter-spacing:-1.5px}
 .hero h1 strong{color:var(--orange)}
-.hero p{color:#ddd;font-size:18px;line-height:1.9;margin:0 0 22px}
+.hero p{color:#ddd;font-size:19px;line-height:1.9;margin:0 0 22px}
 .primary{display:inline-flex;align-items:center;gap:6px;background:linear-gradient(135deg,var(--orange),var(--gold));color:#161616;font-weight:800;border-radius:25px;padding:10px 19px;box-shadow:0 7px 20px rgba(255,98,5,.18);transition:.18s}
 .primary:hover{transform:translateY(-1px)}
 .primary svg,.outline svg{width:17px}
@@ -51,20 +51,20 @@ main{max-width:1180px;margin:auto;padding:16px 22px 80px}
 .benefit:last-child{border-left:0}
 .benefit>svg{width:28px;color:var(--gold)}
 .benefit b,.benefit small{display:block}
-.benefit b{font-size:15px}
-.benefit small{color:#777;font-size:12px}
+.benefit b{font-size:16px}
+.benefit small{color:#777;font-size:13px}
 
 .section{margin-bottom:48px}
 .heading{display:flex;align-items:end;justify-content:space-between;margin-bottom:17px}
-.heading small{color:var(--orange);font-size:12px;font-weight:800}
-.heading h2{font-size:28px;margin:0}
+.heading small{color:var(--orange);font-size:13px;font-weight:800}
+.heading h2{font-size:30px;margin:0}
 .heading h2 svg{width:18px;color:var(--gold);fill:currentColor;vertical-align:-2px}
 .outline{display:flex;align-items:center;gap:5px;border:1px solid var(--orange);border-radius:20px;padding:8px 15px;font-size:13px;font-weight:800}
 
 .categories{display:grid;grid-template-columns:repeat(8,1fr);gap:9px}
 .category{min-height:90px;border:1px solid #2d2d2d;background:var(--card);color:#aaa;border-radius:12px;padding:9px 4px;display:flex;flex-direction:column;justify-content:center;align-items:center;gap:7px;transition:.18s}
 .category svg{width:23px;height:23px}
-.category span{font-size:12px;font-weight:800;text-align:center}
+.category span{font-size:13px;font-weight:800;text-align:center}
 .category:hover{transform:translateY(-2px);border-color:#505050}
 .category.selected{background:linear-gradient(145deg,var(--orange),#ff8c00);color:#fff;border-color:transparent}
 .crosshair{font-size:23px;line-height:23px}
@@ -86,14 +86,14 @@ main{max-width:1180px;margin:auto;padding:16px 22px 80px}
 .card-bottom span{display:inline-flex;padding:4px 7px;border-radius:6px;background:rgba(12,12,12,.72);border:1px solid rgba(255,255,255,.1);font-size:9px;font-weight:700;color:#eee;backdrop-filter:blur(6px)}
 .info{padding:13px 14px 14px}
 .meta{display:flex;align-items:center;justify-content:space-between;gap:8px;margin-bottom:4px}
-.meta small{color:#aaa;font-size:10px;font-weight:700}
+.meta small{color:#aaa;font-size:11px;font-weight:700}
 .meta span{font-size:8px;letter-spacing:.8px;color:#777;font-weight:900}
-.info h3{font-size:15px;font-weight:800;line-height:1.45;margin:0 0 12px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.info h3{font-size:16px;font-weight:800;line-height:1.45;margin:0 0 12px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .price-row{display:flex;align-items:center;justify-content:space-between;gap:10px}
 .price{display:flex;align-items:baseline;gap:7px}
-.price del{color:#777;font-size:10px}
-.price strong{color:#fff;font-size:20px;font-weight:900;line-height:1}
-.add-cart{height:37px;padding:0 11px;border:0;border-radius:10px;background:linear-gradient(135deg,var(--orange),var(--gold));color:#171717;display:flex;align-items:center;justify-content:center;gap:6px;font-family:inherit;font-size:10px;font-weight:900;cursor:pointer;box-shadow:0 5px 13px rgba(255,98,5,.16);transition:transform .18s ease,filter .18s ease}
+.price del{color:#777;font-size:11px}
+.price strong{color:#fff;font-size:21px;font-weight:900;line-height:1}
+.add-cart{height:39px;padding:0 12px;border:0;border-radius:10px;background:linear-gradient(135deg,var(--orange),var(--gold));color:#171717;display:flex;align-items:center;justify-content:center;gap:6px;font-family:inherit;font-size:11px;font-weight:900;cursor:pointer;box-shadow:0 5px 13px rgba(255,98,5,.16);transition:transform .18s ease,filter .18s ease}
 .add-cart:hover{filter:brightness(1.08);transform:translateY(-1px)}
 .add-cart svg{width:16px;height:16px;stroke-width:2.5}
 .app.en .meta{direction:ltr}
@@ -106,8 +106,8 @@ main{max-width:1180px;margin:auto;padding:16px 22px 80px}
 .gift{font-size:43px;position:relative}
 .promo div{flex:1;position:relative}
 .promo div strong,.promo div b{display:block}
-.promo div strong{color:var(--orange);font-size:21px}
-.promo div b{font-size:15px}
+.promo div strong{color:var(--orange);font-size:22px}
+.promo div b{font-size:16px}
 .small{font-size:11px;padding:8px 15px}
 
 .trust{display:grid;grid-template-columns:repeat(3,1fr);gap:15px;border-top:1px solid #292929;padding-top:24px}
@@ -141,7 +141,7 @@ footer .logo{width:110px;height:60px}
 .details-buy>div{display:flex;align-items:baseline;gap:9px}
 .details-buy del{font-size:12px;color:#777}
 .details-buy strong{font-size:27px;font-weight:900}
-.details-buy em{font-style:normal;font-size:10px;font-weight:900;color:#171717;background:linear-gradient(135deg,var(--orange),var(--gold));padding:5px 7px;border-radius:6px}
+.details-buy em{font-style:normal;font-size:11px;font-weight:900;color:#171717;background:linear-gradient(135deg,var(--orange),var(--gold));padding:5px 7px;border-radius:6px}
 .details-cart{height:46px;padding:0 19px;border:0;border-radius:11px;background:linear-gradient(135deg,var(--orange),var(--gold));color:#171717;font-family:inherit;font-size:12px;font-weight:900;display:flex;align-items:center;gap:7px;box-shadow:0 7px 18px rgba(255,98,5,.18)}
 .details-note{display:flex;align-items:center;justify-content:center;gap:6px;color:#777;font-size:9px;margin-top:18px}
 .details-note svg{width:14px;height:14px}
@@ -216,7 +216,7 @@ footer .logo{width:110px;height:60px}
   .actions{order:1;gap:7px;flex:1;min-width:0}
   .desktop{display:none}
   .search{width:auto;flex:1;height:38px;min-width:0}
-  .search input{font-size:11px}
+  .search input{font-size:12px}
   .lang-toggle{display:grid;place-items:center;min-width:48px;height:38px}
   .cart{width:35px;flex:0 0 35px}
   main{padding:12px 12px 92px}
@@ -230,17 +230,17 @@ footer .logo{width:110px;height:60px}
   .benefits{margin:18px 0 38px;padding:14px 4px;min-height:91px}
   .benefit{gap:5px;border:0;text-align:center;flex-direction:column}
   .benefit>svg{width:25px;height:25px}
-  .benefit b{font-size:10px;line-height:1.35}
+  .benefit b{font-size:11px;line-height:1.35}
   .benefit small{display:none}
   .section{margin-bottom:27px}
   .heading{margin-bottom:14px;align-items:center}
-  .heading small{font-size:11px}
-  .heading h2{font-size:23px;line-height:1.25}
-  .outline{font-size:11px;padding:7px 11px}
+  .heading small{font-size:12px}
+  .heading h2{font-size:25px;line-height:1.25}
+  .outline{font-size:12px;padding:7px 11px}
   .categories{display:flex;overflow-x:auto;scrollbar-width:none;gap:8px;padding:2px 0 5px}
   .categories::-webkit-scrollbar{display:none}
   .category{min-width:88px;min-height:82px;padding:9px 5px;gap:8px}
-  .category span{font-size:11px;line-height:1.25}
+  .category span{font-size:12px;line-height:1.25}
   .grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:9px}
   .card{border-radius:13px}
   .card:hover{transform:translateY(-2px)}
@@ -251,19 +251,19 @@ footer .logo{width:110px;height:60px}
   .card-bottom{left:7px;bottom:7px}
   .card-bottom span{font-size:7px;padding:3px 5px}
   .info{padding:9px}
-  .meta small{font-size:8px}
-  .meta span{font-size:7px}
-  .info h3{font-size:11px;margin-bottom:9px}
+  .meta small{font-size:9px}
+  .meta span{font-size:8px}
+  .info h3{font-size:13px;margin-bottom:9px}
   .price{gap:5px}
-  .price del{font-size:8px}
-  .price strong{font-size:15px}
+  .price del{font-size:9px}
+  .price strong{font-size:17px}
   .add-cart{width:31px;height:31px;padding:0;border-radius:8px}
   .add-cart span{display:none}
   .add-cart svg{width:15px;height:15px}
   .promo{min-height:108px;padding:15px;gap:9px}
   .gift{font-size:31px}
-  .promo div strong{font-size:17px}
-  .promo div b{font-size:10px}
+  .promo div strong{font-size:18px}
+  .promo div b{font-size:11px}
   .promo .primary{padding:7px 9px;font-size:9px}
   .trust{grid-template-columns:1fr;gap:11px}
   footer{flex-direction:column;gap:9px;text-align:center;padding-bottom:78px}
