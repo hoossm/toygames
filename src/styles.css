@@ -1,9 +1,9 @@
-@import url('https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700;800;900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap');
 
 :root{--bg:#181818;--card:#202020;--card2:#242424;--line:#303030;--text:#fff;--muted:#969696;--orange:#ff6205;--gold:#ffa909}
 *{box-sizing:border-box}
 html{scroll-behavior:smooth}
-body{margin:0;background:var(--bg);color:var(--text);font-family:Cairo,Tahoma,Arial,sans-serif;-webkit-font-smoothing:antialiased}
+body{margin:0;background:var(--bg);color:var(--text);font-family:Inter,Arial,sans-serif;-webkit-font-smoothing:antialiased}
 a{text-decoration:none;color:inherit}
 button,input{font:inherit}
 button{cursor:pointer}
@@ -27,8 +27,6 @@ nav a:hover,nav a.active{color:var(--gold);border-color:var(--gold)}
 .cart{position:relative;width:38px;height:38px}
 .cart b{position:absolute;top:-1px;right:-2px;min-width:17px;height:17px;padding:0 4px;border-radius:10px;background:var(--orange);font:700 10px Arial;display:grid;place-items:center}
 .mobile-menu{display:none}
-.lang-toggle{height:34px;min-width:44px;padding:0 9px;border:1px solid #383838;border-radius:18px;background:#242424;color:#fff;font-size:10px;font-weight:800}
-.lang-toggle:hover{border-color:var(--orange);color:var(--gold)}
 
 main{max-width:1180px;margin:auto;padding:16px 22px 80px}
 .hero{min-height:450px;border-radius:20px;overflow:hidden;position:relative;display:flex;align-items:center;padding:45px 55px;background:linear-gradient(90deg,rgba(0,0,0,.94),rgba(0,0,0,.58) 45%,rgba(0,0,0,.08)),url("https://cdn.akamai.steamstatic.com/steam/apps/292030/library_hero.jpg") center/cover no-repeat}
@@ -151,7 +149,6 @@ footer .logo{width:110px;height:60px}
 .cart{cursor:pointer}
 .cart-overlay{position:fixed;z-index:1200;inset:0;background:rgba(0,0,0,.72);backdrop-filter:blur(7px);display:flex;justify-content:flex-end;animation:cartFade .18s ease}
 .cart-panel{width:min(610px,100%);height:100%;background:#1d1d1d;border-left:1px solid rgba(255,255,255,.08);box-shadow:-24px 0 70px rgba(0,0,0,.45);display:flex;flex-direction:column;padding:40px;overflow:hidden;animation:cartSlide .22s ease}
-.app.ar .cart-panel{border-left:0;border-right:1px solid rgba(255,255,255,.08);box-shadow:24px 0 70px rgba(0,0,0,.45);animation-name:cartSlideR}
 .cart-head{display:flex;align-items:flex-start;justify-content:space-between;gap:20px}
 .cart-head small{display:block;color:var(--orange);font-size:12px;font-weight:800;margin-bottom:27px}
 .cart-head h2{font-size:32px;line-height:1;margin:0;font-weight:900;color:#fff}
@@ -160,7 +157,6 @@ footer .logo{width:110px;height:60px}
 .cart-divider{height:1px;background:rgba(255,255,255,.09);margin:42px 0 24px}
 .cart-list{flex:1;overflow:auto;padding-right:3px}
 .cart-item{display:flex;gap:16px;padding:13px 15px;border:1px solid rgba(255,255,255,.07);border-radius:19px;background:#232323;margin-bottom:12px;min-height:124px}
-.app.ar .cart-item{flex-direction:row-reverse}
 .cart-item>img{width:155px;height:73px;align-self:flex-start;object-fit:cover;border-radius:10px;background:#191919}
 .cart-item-main{position:relative;flex:1;min-width:0}
 .cart-item-top{display:flex;align-items:center;justify-content:space-between;gap:10px}
@@ -170,7 +166,6 @@ footer .logo{width:110px;height:60px}
 .cart-item h3{font-size:16px;margin:8px 0 5px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .cart-item-main>strong{display:block;color:var(--orange);font-size:18px}
 .qty{position:absolute;right:0;bottom:0;display:flex;align-items:center;gap:12px}
-.app.ar .qty{right:auto;left:0}
 .qty button{width:34px;height:34px;border:1px solid rgba(255,255,255,.1);border-radius:9px;background:#2b2b2b;color:#fff;font-size:20px;line-height:1}
 .qty button:hover{border-color:rgba(255,98,5,.45);background:#303030}
 .qty b{min-width:12px;text-align:center;font-size:13px}
@@ -206,7 +201,6 @@ footer .logo{width:110px;height:60px}
   .head .actions{order:3;justify-content:flex-end;gap:10px;flex:1}
   .head .actions .desktop{display:none}
   .head .search{width:clamp(190px,28vw,270px);height:42px}
-  .head .lang-toggle{display:grid;place-items:center;min-width:52px;height:38px;font-size:12px}
   .head .cart{flex:0 0 42px;width:42px;height:42px}
 }
 @media(max-width:760px){
@@ -217,7 +211,6 @@ footer .logo{width:110px;height:60px}
   .desktop{display:none}
   .search{width:auto;flex:1;height:38px;min-width:0}
   .search input{font-size:12px}
-  .lang-toggle{display:grid;place-items:center;min-width:48px;height:38px}
   .cart{width:35px;flex:0 0 35px}
   main{padding:12px 12px 92px}
   .hero{min-height:430px;border-radius:14px;padding:30px 22px 34px;align-items:end;background-position:67% center}
@@ -278,8 +271,7 @@ footer .logo{width:110px;height:60px}
   .drawer aside a{display:block;padding:13px 2px;border-bottom:1px solid #292929;font-weight:800;font-size:13px}
   .close{position:absolute;top:18px;left:17px;border:0;background:transparent;color:#fff}
   .close svg{width:21px}
-  .drawer-lang{margin-top:22px;width:100%;height:42px;border:1px solid var(--orange);border-radius:10px;background:transparent;color:#fff;font-weight:800}
-  .details-overlay{padding:10px}
+    .details-overlay{padding:10px}
   .details{max-height:94vh;border-radius:16px}
   .details-close{top:9px;right:9px;width:34px;height:34px}
   .details-body{margin-top:-48px;padding:0 16px 20px}
@@ -318,7 +310,6 @@ footer .logo{width:110px;height:60px}
   .actions{gap:5px}
   .search{height:36px}
   .search input{font-size:10px}
-  .lang-toggle{min-width:43px;padding:0 7px}
   .cart{width:33px;flex-basis:33px}
 }
 .app.en .hero-content{text-align:left}
