@@ -1,7 +1,7 @@
 import React, { useMemo, useState } from "react";
 import { createRoot } from "react-dom/client";
 import {
-  Search, ShoppingCart, Heart, UserRound, ChevronLeft, Menu, X,
+  Search, ShoppingCart, Heart, UserRound, ChevronRight, Menu, X,
   Flame, Tag, Zap, ShieldCheck, Headphones, Grid2X2, Trophy, Car,
   Swords, Compass, Dice5, Home, Check, Gamepad2
 } from "lucide-react";
@@ -72,14 +72,14 @@ function Header({ q, setQ, count, onCart }) {
   );
 }
 function Hero() {
-  return <section className="hero"><div className="hero-content"><span className="eyebrow"><Flame /> Weekly Offers</span><h1>More games.<br /><strong>Better prices.</strong></h1><p>Enjoy a huge digital game library<br />with offers made for you.</p><a className="primary" href="#offers">Browse Offers <ChevronLeft /></a></div><div className="dots"><i className="on" /><i /><i /></div></section>;
+  return <section className="hero"><div className="hero-content"><span className="eyebrow"><Flame /> Weekly Offers</span><h1>More games.<br /><strong>Better prices.</strong></h1><p>Enjoy a huge digital game library<br />with offers made for you.</p><a className="primary" href="#offers">Browse Offers <ChevronRight /></a></div><div className="dots"><i className="on" /><i /><i /></div></section>;
 }
 function Benefits() {
   const items = [[Tag,"Great Prices","Always competitive"],[Zap,"Instant Delivery","Your account in minutes"],[ShieldCheck,"Secure Payment","Trusted payment methods"],[Headphones,"Fast Support","We're here to help"]];
   return <div className="benefits">{items.map(([I,t,s]) => <div className="benefit" key={t}><I /><span><b>{t}</b><small>{s}</small></span></div>)}</div>;
 }
 function Categories({ selected, setSelected }) {
-  return <section id="categories" className="section"><div className="heading"><div><small>Explore</small><h2>Main Categories <Flame /></h2></div><a className="outline" href="#games">View All <ChevronLeft /></a></div><div className="categories">{categories.map(([name,I]) => <button className={selected === name ? "category selected" : "category"} onClick={() => setSelected(name)} key={name}><I /><span>{name}</span></button>)}</div></section>;
+  return <section id="categories" className="section"><div className="heading"><div><small>Explore</small><h2>Main Categories <Flame /></h2></div><a className="outline" href="#games">View All <ChevronRight /></a></div><div className="categories">{categories.map(([name,I]) => <button className={selected === name ? "category selected" : "category"} onClick={() => setSelected(name)} key={name}><I /><span>{name}</span></button>)}</div></section>;
 }
 function Card({ g, onAdd, onOpen }) {
   const [liked, setLiked] = useState(false);
@@ -107,10 +107,10 @@ function Card({ g, onAdd, onOpen }) {
 
 function Games({ id, title, list, q, onAdd, onOpen, selectedCategory }) {
   const filtered = useMemo(() => { const term=q.trim().toLowerCase(); return list.filter(x => { const matchesSearch=!term || (x.t+" "+x.g).toLowerCase().includes(term); const matchesCategory=selectedCategory==="All Games" || x.g===selectedCategory; return matchesSearch && matchesCategory; }); }, [list,q,selectedCategory]);
-  return <section id={id} className="section"><div className="heading"><div><small>Our Picks</small><h2>{title} <Flame /></h2></div><a className="outline" href="#games">View All <ChevronLeft /></a></div>{filtered.length ? <div className="grid">{filtered.map(g => <Card key={g.id} g={g} onAdd={onAdd} onOpen={onOpen} />)}</div> : <div className="empty">No matching games 😔</div>}</section>;
+  return <section id={id} className="section"><div className="heading"><div><small>Our Picks</small><h2>{title} <Flame /></h2></div><a className="outline" href="#games">View All <ChevronRight /></a></div>{filtered.length ? <div className="grid">{filtered.map(g => <Card key={g.id} g={g} onAdd={onAdd} onOpen={onOpen} />)}</div> : <div className="empty">No matching games 😔</div>}</section>;
 }
 function Promo() {
-  return <section id="offers" className="promo"><span className="gift">🎁</span><div><strong>Special Offers</strong><b>Up to 80% off</b></div><a className="primary small" href="#games">Shop Now <ChevronLeft /></a></section>;
+  return <section id="offers" className="promo"><span className="gift">🎁</span><div><strong>Special Offers</strong><b>Up to 80% off</b></div><a className="primary small" href="#games">Shop Now <ChevronRight /></a></section>;
 }
 function GameDetails({ g, onClose, onAdd }) {
   if (!g) return null;
