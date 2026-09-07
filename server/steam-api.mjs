@@ -1,5 +1,5 @@
 const API_KEY = process.env.STEAM_API_KEY;
-const APP_LIST_URL = 'https://partner.steam-api.com/IStoreService/GetAppList/v1/';
+const APP_LIST_URL = 'https://api.steampowered.com/IStoreService/GetAppList/v1/';
 const APP_DETAILS_URL = 'https://store.steampowered.com/api/appdetails/';
 
 function requiredKey() {
@@ -13,7 +13,11 @@ async function fetchJson(url, options = {}, retries = 3) {
     try {
       const response = await fetch(url, {
         ...options,
-        headers: { Accept: 'application/json', 'User-Agent': 'ToyGamesCatalog/1.0', ...(options.headers || {}) }
+        headers: {
+          Accept: 'application/json',
+          'User-Agent': 'ToyGamesCatalog/1.0',
+          ...(options.headers || {})
+        }
       });
       if (!response.ok) throw new Error(`HTTP ${response.status}`);
       return await response.json();
@@ -25,18 +29,27 @@ async function fetchJson(url, options = {}, retries = 3) {
   throw lastError;
 }
 
-export async function getAppList({ lastAppId = 0, ifModifiedSince = null } = {}) {
+export async function getAppList({
+  lastAppId = 0,
+  ifModifiedSince = null,
+  maxResults = 50000
+} = {}) {
   const input = {
     include_games: true,
     include_dlc: false,
     include_software: false,
     include_videos: false,
     include_hardware: false,
-    max_results: 50000,
+    max_results: Math.min(Math.max(Number(maxResults) || 50000, 1), 50000),
     ...(lastAppId ? { last_appid: lastAppId } : {}),
     ...(ifModifiedSince ? { if_modified_since: ifModifiedSince } : {})
   };
-  const params = new URLSearchParams({ key: requiredKey(), input_json: JSON.stringify(input) });
+
+  const params = new URLSearchParams({
+    key: requiredKey(),
+    input_json: JSON.stringify(input)
+  });
+
   return fetchJson(`${APP_LIST_URL}?${params}`);
 }
 
