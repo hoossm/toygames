@@ -230,3 +230,4 @@ return <div className={"app "+lang} dir={lang==="ar"?"rtl":"ltr"}>
 </div>
 }
 createRoot(document.getElementById("root")).render(<App/>);
+
