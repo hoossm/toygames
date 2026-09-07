@@ -8,16 +8,7 @@ import {
 } from "lucide-react";
 import "./styles.css";
 
-const games = [
-  { id:1, steamAppId:1174180, t:"Red Dead Redemption 2", g:"Action", p:17.99, o:59.99, d:70, img:"https://cdn.akamai.steamstatic.com/steam/apps/1174180/header.jpg" },
-  { id:2, steamAppId:2361850, t:"EA SPORTS FC 24", g:"Sports", p:27.99, o:69.99, d:60, img:"https://cdn.akamai.steamstatic.com/steam/apps/2361850/header.jpg" },
-  { id:3, steamAppId:1091500, t:"Cyberpunk 2077", g:"Adventure", p:19.99, o:59.99, d:67, img:"https://cdn.akamai.steamstatic.com/steam/apps/1091500/header.jpg" },
-  { id:4, steamAppId:271590, t:"Grand Theft Auto V", g:"Action", p:20.99, o:59.99, d:65, img:"https://cdn.akamai.steamstatic.com/steam/apps/271590/header.jpg" },
-  { id:5, steamAppId:292030, t:"The Witcher 3: Wild Hunt", g:"Adventure", p:9.99, o:39.99, d:75, img:"https://cdn.akamai.steamstatic.com/steam/apps/292030/header.jpg" },
-  { id:6, steamAppId:1245620, t:"Elden Ring", g:"RPG", p:34.99, o:59.99, d:42, img:"https://cdn.akamai.steamstatic.com/steam/apps/1245620/header.jpg" },
-  { id:7, steamAppId:990080, t:"Hogwarts Legacy", g:"Adventure", p:21.99, o:59.99, d:63, img:"https://cdn.akamai.steamstatic.com/steam/apps/990080/header.jpg" },
-  { id:8, steamAppId:1551360, t:"Forza Horizon 5", g:"Racing", p:24.99, o:59.99, d:58, img:"https://cdn.akamai.steamstatic.com/steam/apps/1551360/header.jpg" }
-];
+import { games } from "./catalog";
 
 const descriptions = {
   1:{en:"Experience an epic journey through the American frontier with a deep story and unforgettable characters."},
