@@ -1,0 +1,10 @@
+{
+  "name": "toygames-catalog-worker",
+  "private": true,
+  "type": "module",
+  "engines": { "node": ">=22.0.0" },
+  "scripts": {
+    "initial-import": "node initial-import.mjs",
+    "daily-sync": "node daily-sync.mjs"
+  }
+}
