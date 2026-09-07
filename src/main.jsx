@@ -83,7 +83,7 @@ function Card({ g, onAdd, onOpen }) {
           <span className="deal-pill">-{g.d}%</span>
           <button className={liked ? "like liked" : "like"} onClick={e => { e.stopPropagation(); setLiked(v => !v); }} aria-label={"Add to wishlist"}><Heart /></button>
         </div>
-        <div className="card-bottom"><span>{"Account"}</span></div>
+        <div className="card-bottom"><span>{g.type || "Steam Account"}</span></div>
       </div>
       <div className="info">
         <div className="meta"><small>{g.g}</small><span>STEAM</span></div>
@@ -106,7 +106,7 @@ function Promo() {
 }
 function GameDetails({ g, onClose, onAdd }) {
   if (!g) return null;
-  const checks = ["Steam account","Instant delivery","Full support"];
+  const checks = [g.type || "Steam Account","Instant delivery","Full support"];
   return (
     <div className="details-overlay" onClick={onClose}>
       <div className="details" onClick={e => e.stopPropagation()}>
@@ -146,7 +146,7 @@ function Cart({ items, onClose, onIncrease, onDecrease, onRemove, onCheckout }) 
               <div className="cart-item" key={item.id}>
                 <img src={item.img} alt={item.t} />
                 <div className="cart-item-main">
-                  <div className="cart-item-top"><span className="cart-type">{"Steam Account"}</span><button className="cart-remove" onClick={() => onRemove(item.id)}><X /></button></div>
+                  <div className="cart-item-top"><span className="cart-type">{item.type || "Steam Account"}</span><button className="cart-remove" onClick={() => onRemove(item.id)}><X /></button></div>
                   <h3>{item.t}</h3>
                   <strong>{fmt(item.p)}</strong>
                   <div className="qty"><button onClick={() => onDecrease(item.id)}>−</button><b>{item.qty}</b><button onClick={() => onIncrease(item.id)}>+</button></div>
@@ -192,7 +192,7 @@ function App() {
     loadSteamCatalog(games).then(next => {
       if (!cancelled) setCatalog(next);
     }).catch(() => {
-      // Keep the saved catalog silently if Steam is unavailable.
+      // Keep the saved ToyGames catalog silently if Steam is unavailable.
     });
     return () => { cancelled = true; };
   }, []);

@@ -1,20 +1,48 @@
-const STEAM_URL = "https://store.steampowered.com/api/appdetails";
+const STEAM_ENDPOINT = "https://store.steampowered.com/api/appdetails/";
 
 export default async function handler(req, res) {
-  const raw = Array.isArray(req.query?.appids) ? req.query.appids.join(",") : req.query?.appids;
-  const appids = String(raw || "").split(",").map(x => x.trim()).filter(x => /^\d+$/.test(x)).slice(0, 50);
+  if (req.method !== "GET") {
+    res.setHeader("Allow", "GET");
+    return res.status(405).json({ error: "Method not allowed" });
+  }
 
-  if (!appids.length) return res.status(400).json({ error: "Missing appids" });
+  const appids = String(req.query?.appids || "");
+  const ids = appids
+    .split(",")
+    .map(id => id.trim())
+    .filter(id => /^\d+$/.test(id));
+
+  if (!ids.length || ids.length > 50) {
+    return res.status(400).json({ error: "Provide 1-50 numeric Steam app IDs" });
+  }
+
+  const controller = new AbortController();
+  const timeout = setTimeout(() => controller.abort(), 6500);
 
   try {
-    const upstream = await fetch(`${STEAM_URL}?appids=${encodeURIComponent(appids.join(","))}&cc=us&l=english`, {
-      headers: { Accept: "application/json" }
+    const steamUrl = `${STEAM_ENDPOINT}?appids=${encodeURIComponent(ids.join(","))}&cc=us&l=english`;
+    const response = await fetch(steamUrl, {
+      signal: controller.signal,
+      headers: {
+        Accept: "application/json",
+        "User-Agent": "ToyGames/1.0"
+      }
     });
-    if (!upstream.ok) return res.status(502).json({ error: `Steam returned ${upstream.status}` });
-    const data = await upstream.json();
-    res.setHeader("Cache-Control", "s-maxage=300, stale-while-revalidate=600");
+
+    if (!response.ok) {
+      return res.status(502).json({ error: "Steam request failed" });
+    }
+
+    const data = await response.json();
+
+    // Let Vercel/CDNs reuse the same catalog response briefly.
+    res.setHeader("Cache-Control", "public, s-maxage=300, stale-while-revalidate=3600");
     return res.status(200).json(data);
-  } catch {
-    return res.status(502).json({ error: "Steam unavailable" });
+  } catch (error) {
+    return res.status(502).json({
+      error: error?.name === "AbortError" ? "Steam request timed out" : "Unable to reach Steam"
+    });
+  } finally {
+    clearTimeout(timeout);
   }
 }
